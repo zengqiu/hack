@@ -6,7 +6,7 @@ import os, re, sys, socket, struct, time
 def ip_check(ip):
     ip_int_start = struct.unpack('!L', socket.inet_aton('1.0.0.0'))[0]
     ip_int_end = struct.unpack('!L', socket.inet_aton('255.255.255.255'))[0]
-	
+    
     try:
         ip_int = struct.unpack('!L', socket.inet_aton(ip))[0]
     except Exception, e:
@@ -14,7 +14,7 @@ def ip_check(ip):
         sys.exit()
 
     return ip_int
-		
+
 def ip_generate(ip_start, ip_end):
     ip_int_start = ip_check(ip_start)
     ip_int_end = ip_check(ip_end)
@@ -26,7 +26,7 @@ def ip_generate(ip_start, ip_end):
         
         ip_list = open(filename, 'a')
         ip_int = ip_int_start
-		
+        
         while ip_int <= ip_int_end:
             ip = socket.inet_ntoa(struct.pack('!L', ip_int))
             ip_list.write(ip + '\n')
@@ -68,4 +68,4 @@ def main():
     print 'Generate ip list successed'
 
 if __name__ == '__main__':
-	main()
+    main()
