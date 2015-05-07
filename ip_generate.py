@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#encoding: utf-8
 #author: zengqiu
 
 import os, re, sys, socket, struct, time
